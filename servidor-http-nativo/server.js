@@ -11,38 +11,40 @@ const produtos = [
 ]
 
 const server = http.createServer((req, res) => {
+
+    console.log(`${req.method} ${req.url}`)
+
     res.statusCode = 200
     res.setHeader('Content-Type', 'application/json; charset=utf-8')
 
     if (req.method == "GET" && req.url == "/contato") {
-        return res.end(JSON.stringify({data:
-            {numero_telefone: "67 99999 9999",
-                endereco: "Rua da Alegria, 99, Centro"}}));
-    } else{
-        res.statusCode = 404;
-        res.end('Rota não encontrada')
-     } 
+        return res.end(JSON.stringify({
+            data: {
+                numero_telefone: "67 99999 9999",
+                endereco: "Rua da Alegria, 99, Centro"
+            }
+        }))
+    }
 
     if (req.method == "GET" && req.url == "/produtos") {
-        return res.end(JSON.stringify(produtos));
-
-    } else{
-        res.statusCode = 404;
-        res.end('Rota não encontrada')
-     } 
+        return res.end(JSON.stringify(produtos))
+    }
 
     if (req.method == "GET" && req.url == "/status") {
-        return res.end(JSON.stringify({"status": "ok" }));
-        
-     } else{
-        res.statusCode = 404;
-        res.end('Rota não encontrada')
-     } 
-    
+        return res.end(JSON.stringify({
+            status: "ok"
+        }))
+    }
+    if (req.method == "GET" && req.url == "/") {
+    return res.end(JSON.stringify({
+        mensagem: "Página inicial"
+    }))
+}
 
-    res.end(JSON.stringify({data: "Página Inicial"}))
+    res.statusCode = 404
+    res.end('Rota não encontrada')
 })
 
 server.listen(porta, () => {
     console.log(`Servidor ouvindo na porta ${porta}`)
-});
+})
